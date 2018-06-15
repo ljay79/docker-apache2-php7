@@ -22,7 +22,7 @@ RUN yum -y install \
 
 # custom php.ini
 # /etc/php-7.0.conf/php.ini takes precedence of /etc/php.ini (php7 only)
-COPY ./php.ini /etc/php-7.0.conf/php.ini
+# COPY ./php.ini /etc/php-7.0.conf/php.ini
 
 # cloudflare apache mod
 RUN yum -y install wget
