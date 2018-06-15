@@ -1,14 +1,17 @@
-FROM ljay/amazon-linux-base:latest
+FROM amazonlinux:2018.03
 
 # File Author / Maintainer
 MAINTAINER ljay
+
+# update amazon software repo
+RUN yum -y update && yum -y install shadow-utils
 
 #
 # All installed packages via YUM are amazon linux maintained and prepared to run best on amazon-linux distro
 #
 
 # install Apache/2.4.x
-RUN yum -y update && yum -y install libtool httpd24 httpd24-devel
+RUN yum -y install libtool httpd24 httpd24-devel
 
 # install php 7.0.x
 RUN yum -y install \
