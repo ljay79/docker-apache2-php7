@@ -12,8 +12,5 @@ Version | Git branch | Tag name
 --------| ---------- |---------
 7.0.30  | master     | latest
 7.0.30  | master     | 7.0
-7.0.30  | magento    | 7.0-magento
-
-> Note: Tag: _7.0-magento_ has Apache modules and PHP INI customized to run with Magento 1.9x . This setup by default might not fit your needs.
 
 ## to be continued ...
