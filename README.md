@@ -4,13 +4,13 @@
 
 [![Docker build](http://dockeri.co/image/ljay/apache2-php7)](https://hub.docker.com/r/ljay/apache2-php7/)
 
-This repo creates a Docker image for Apache 2.4 + PHP 7.0 running on Amazon Linux.
+This repo creates a Docker image for Apache 2.4.41 + PHP 7.0 running on Amazon Linux.
 
 ## PHP versions
 
 Version | Git branch | Tag name
 --------| ---------- |---------
-7.0.30  | master     | latest
-7.0.30  | master     | 7.0
+7.0.33  | master     | latest
+7.0.33  | master     | 7.0
 
 ## to be continued ...
