@@ -4,7 +4,7 @@ FROM amazonlinux:2018.03
 MAINTAINER ljay
 
 # update amazon software repo
-RUN yum -y update && yum -y install shadow-utils
+RUN yum makecache fast && yum -y update && yum -y install shadow-utils
 
 #
 # All installed packages via YUM are amazon linux maintained and prepared to run best on amazon-linux distro
@@ -25,10 +25,7 @@ RUN yum -y install \
 # COPY ./php.ini /etc/php-7.0.conf/php.ini
 
 # cloudflare apache mod
-RUN yum -y install wget
-RUN wget -O mod_cloudflare.c https://www.cloudflare.com/static/misc/mod_cloudflare/mod_cloudflare.c \
-	&& apxs -a -i -c mod_cloudflare.c \
-    && apachectl -k restart
+COPY ./remoteip.conf /etc/httpd/conf.d/remoteip.conf
 
 # make sure apache starts on boot
 RUN chkconfig httpd on && chown -R apache /var/www
@@ -37,7 +34,7 @@ RUN chkconfig httpd on && chown -R apache /var/www
 RUN sed -i '/<Directory "\/var/,/<\/Directory>/ s/AllowOverride None/AllowOverride all/' /etc/httpd/conf/httpd.conf
 
 # persistent / runtime deps
-RUN yum -y update && yum -y install \
+RUN yum -y install \
 	ca-certificates \
 	curl \
 	libcurl \
@@ -55,11 +52,14 @@ RUN rm -rf /var/www/html \
 
 # copy bash script to disable unused apache modules
 COPY ./apache2-disable-mods.sh /tmp/apache2-disable-mods.sh
-RUN chmod +x /tmp/apache2-disable-mods.sh
-RUN /tmp/apache2-disable-mods.sh
+RUN chmod +x /tmp/apache2-disable-mods.sh \
+	&& /tmp/apache2-disable-mods.sh
+
+COPY --from=composer:2.0.8 /usr/bin/composer /usr/local/bin/
 
 # cleanup
-RUN yum clean all && rm -rf /tmp/* /var/tmp/*
+RUN yum clean all \
+	&& rm -rf /tmp/* /var/tmp/*
 
 WORKDIR /var/www/html
 
